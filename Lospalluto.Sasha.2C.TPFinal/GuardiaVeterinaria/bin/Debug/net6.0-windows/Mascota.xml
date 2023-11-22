@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfMascota xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <Mascota>
+        <Nombre>max</Nombre>
+        <Nombre_tutor>Sasha</Nombre_tutor>
+        <Dni_tutor>40422602</Dni_tutor>
+        <Edad>5</Edad>
+        <Tipo>Perro</Tipo>
+        <Peso>30</Peso>
+    </Mascota>
+    <Mascota>
+        <Nombre>raul</Nombre>
+        <Nombre_tutor>rosana</Nombre_tutor>
+        <Dni_tutor>10123123</Dni_tutor>
+        <Edad>12</Edad>
+        <Tipo>Gato</Tipo>
+        <Peso>3</Peso>
+    </Mascota>
+    <Mascota>
+        <Nombre>kaka</Nombre>
+        <Nombre_tutor>walter</Nombre_tutor>
+        <Dni_tutor>18181919</Dni_tutor>
+        <Edad>11</Edad>
+        <Tipo>Gato</Tipo>
+        <Peso>23</Peso>
+    </Mascota>
+</ArrayOfMascota>

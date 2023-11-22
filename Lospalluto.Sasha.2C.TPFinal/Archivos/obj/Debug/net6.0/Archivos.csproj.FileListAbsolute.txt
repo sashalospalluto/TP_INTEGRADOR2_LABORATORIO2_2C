@@ -1,0 +1,15 @@
+C:\Users\usuario\Desktop\TP_INTEGRADOR2_LABORATORIO2_2C\Lospalluto.Sasha.2C.TPFinal\Archivos\obj\Debug\net6.0\Archivos.csproj.AssemblyReference.cache
+C:\Users\usuario\Desktop\TP_INTEGRADOR2_LABORATORIO2_2C\Lospalluto.Sasha.2C.TPFinal\Archivos\obj\Debug\net6.0\Archivos.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\usuario\Desktop\TP_INTEGRADOR2_LABORATORIO2_2C\Lospalluto.Sasha.2C.TPFinal\Archivos\obj\Debug\net6.0\Archivos.AssemblyInfoInputs.cache
+C:\Users\usuario\Desktop\TP_INTEGRADOR2_LABORATORIO2_2C\Lospalluto.Sasha.2C.TPFinal\Archivos\obj\Debug\net6.0\Archivos.AssemblyInfo.cs
+C:\Users\usuario\Desktop\TP_INTEGRADOR2_LABORATORIO2_2C\Lospalluto.Sasha.2C.TPFinal\Archivos\obj\Debug\net6.0\Archivos.csproj.CoreCompileInputs.cache
+C:\Users\usuario\Desktop\TP_INTEGRADOR2_LABORATORIO2_2C\Lospalluto.Sasha.2C.TPFinal\Archivos\bin\Debug\net6.0\Archivos.deps.json
+C:\Users\usuario\Desktop\TP_INTEGRADOR2_LABORATORIO2_2C\Lospalluto.Sasha.2C.TPFinal\Archivos\bin\Debug\net6.0\Archivos.dll
+C:\Users\usuario\Desktop\TP_INTEGRADOR2_LABORATORIO2_2C\Lospalluto.Sasha.2C.TPFinal\Archivos\bin\Debug\net6.0\Archivos.pdb
+C:\Users\usuario\Desktop\TP_INTEGRADOR2_LABORATORIO2_2C\Lospalluto.Sasha.2C.TPFinal\Archivos\bin\Debug\net6.0\Excepciones.dll
+C:\Users\usuario\Desktop\TP_INTEGRADOR2_LABORATORIO2_2C\Lospalluto.Sasha.2C.TPFinal\Archivos\bin\Debug\net6.0\Excepciones.pdb
+C:\Users\usuario\Desktop\TP_INTEGRADOR2_LABORATORIO2_2C\Lospalluto.Sasha.2C.TPFinal\Archivos\obj\Debug\net6.0\Archivos.csproj.CopyComplete
+C:\Users\usuario\Desktop\TP_INTEGRADOR2_LABORATORIO2_2C\Lospalluto.Sasha.2C.TPFinal\Archivos\obj\Debug\net6.0\Archivos.dll
+C:\Users\usuario\Desktop\TP_INTEGRADOR2_LABORATORIO2_2C\Lospalluto.Sasha.2C.TPFinal\Archivos\obj\Debug\net6.0\refint\Archivos.dll
+C:\Users\usuario\Desktop\TP_INTEGRADOR2_LABORATORIO2_2C\Lospalluto.Sasha.2C.TPFinal\Archivos\obj\Debug\net6.0\Archivos.pdb
+C:\Users\usuario\Desktop\TP_INTEGRADOR2_LABORATORIO2_2C\Lospalluto.Sasha.2C.TPFinal\Archivos\obj\Debug\net6.0\ref\Archivos.dll

@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Veterinaria xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <cantidadMaxEnGuardia>5</cantidadMaxEnGuardia>
+    <Mascotas>
+        <Mascota>
+            <Nombre>max</Nombre>
+            <Nombre_tutor>Sasha</Nombre_tutor>
+            <Dni_tutor>40422602</Dni_tutor>
+            <Edad>5</Edad>
+            <Tipo>Perro</Tipo>
+            <Peso>30</Peso>
+        </Mascota>
+    </Mascotas>
+</Veterinaria>
