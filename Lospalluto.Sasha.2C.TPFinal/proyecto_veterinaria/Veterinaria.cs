@@ -8,11 +8,16 @@ using System.Threading.Tasks;
 
 namespace proyecto_veterinaria
 {
+    public delegate void AtenderEventHandler(Mascota mascota);
     public class Veterinaria
     {
+        public event AtenderEventHandler Atender;
         private List<Mascota> mascotas;
+        private List<Mascota> mascotasAtendiendose;
+        private List<Mascota> mascotasAtendidas;
         private List<Medico> medicos;
         public int cantidadMaxEnGuardia;
+
 
         public Veterinaria()
         {
@@ -152,7 +157,7 @@ namespace proyecto_veterinaria
             return xml.Guardar("Veterinaria", veterinaria);
         }
 
-        public bool AtenderPaciente(Mascota mascota)
+        public bool CargarFicha(Mascota mascota)
         {
             bool pacienteAtendido = false;
 
@@ -164,12 +169,14 @@ namespace proyecto_veterinaria
             return pacienteAtendido;
         }
 
-        public bool PacienteAtendido(Mascota mascota)
+        public bool AtendiendoPaciente(Mascota mascota)
         {
             bool atendido = false;
 
             if(GestorSql.IngresarPacienteAtendido(mascota, this.MedicoRandom(medicos)))
             {
+                this.mascotas.Remove(mascota);
+                this.mascotasAtendiendose.Add(mascota);
                 atendido = true;
             }
 

@@ -70,6 +70,13 @@ namespace GuardiaVeterinaria
             {
                 veterinaria += mascota;
                 this.Refrescar();
+
+                //arranca el hilo
+                Task.Run(() =>
+                {
+
+                });
+                
             }
         }
 
