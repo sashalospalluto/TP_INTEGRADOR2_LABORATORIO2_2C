@@ -30,3 +30,4 @@ C:\Users\usuario\Desktop\TP_INTEGRADOR2_LABORATORIO2_2C\Lospalluto.Sasha.2C.TPFi
 C:\Users\usuario\Desktop\TP_INTEGRADOR2_LABORATORIO2_2C\Lospalluto.Sasha.2C.TPFinal\GuardiaVeterinaria\bin\Debug\net6.0-windows\Archivos.pdb
 C:\Users\usuario\Desktop\TP_INTEGRADOR2_LABORATORIO2_2C\Lospalluto.Sasha.2C.TPFinal\GuardiaVeterinaria\bin\Debug\net6.0-windows\Excepciones.pdb
 C:\Users\usuario\Desktop\TP_INTEGRADOR2_LABORATORIO2_2C\Lospalluto.Sasha.2C.TPFinal\GuardiaVeterinaria\obj\Debug\net6.0-windows\GuardiaVeterinaria.FrmNuevoMedico.resources
+C:\Users\usuario\Desktop\TP_INTEGRADOR2_LABORATORIO2_2C\Lospalluto.Sasha.2C.TPFinal\GuardiaVeterinaria\obj\Debug\net6.0-windows\GuardiaVeterinaria.Properties.Resources.resources

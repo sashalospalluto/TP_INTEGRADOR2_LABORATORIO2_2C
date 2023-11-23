@@ -15,8 +15,7 @@ namespace GuardiaVeterinaria
         public List<Mascota> todasLasMascotas;
         public List<Medico> todosLosMedicos;
         public InformarEstadoEventHandler informarEstado;
-
-
+        public bool xmlYaIngresado;
 
         public GuardiaVeterinaria()
         {
@@ -30,6 +29,7 @@ namespace GuardiaVeterinaria
             todosLosMedicos = GestorSql.GetMedicos();
             veterinaria.InformarModificacion += RefrescarForm;
             veterinaria.Atender += veterinaria.PacienteAtendido;
+            xmlYaIngresado = false;
         }
 
         private void btnNuevaMascota_Click(object sender, EventArgs e)
@@ -41,6 +41,11 @@ namespace GuardiaVeterinaria
 
         }
 
+        /// <summary>
+        /// Metodo que actualiza el form mediante otro metodo llamado Refrescar()
+        /// </summary>
+        /// <param name="sender">El objeto que desencadenó el evento</param>
+        /// <param name="e">Argumentos relacionados con el evento</param>
         private void RefrescarForm(object sender, EventArgs e)
         {
             if (this.InvokeRequired)
@@ -54,6 +59,9 @@ namespace GuardiaVeterinaria
             }
         }
 
+        /// <summary>
+        /// Metodo que actualiza la parte visual
+        /// </summary>
         private void Refrescar()
         {
             this.lstSalaDeEspera.DataSource = null;
@@ -108,7 +116,7 @@ namespace GuardiaVeterinaria
         {
             if (lstPacienteEncontrado.Items.Count > 0 && veterinaria != mascota)
             {
-                if(veterinaria.Medicos.Count > 0)
+                if (veterinaria.Medicos.Count > 0)
                 {
                     veterinaria += mascota;
                     this.Refrescar();
@@ -141,31 +149,40 @@ namespace GuardiaVeterinaria
             }
         }
 
+        /// <summary>
+        /// 10 - excepciones
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnIngresarPacientesXml_Click(object sender, EventArgs e)
         {
-            try
+            if (!xmlYaIngresado)
             {
-                if(veterinaria.Medicos.Count > 0)
+                try
                 {
-                    Xml<List<Mascota>> xml = new Xml<List<Mascota>>();
-
-                    xml.Leer("Mascota", out List<Mascota> cargaMascotas);
-                    foreach (Mascota item in cargaMascotas)
+                    if (veterinaria.Medicos.Count > 0)
                     {
-                        veterinaria += item;
-                        //this.Refrescar();
-                        //ComenzarAtencion(item);
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("No hay medicos de turno", "Informacion", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
+                        Xml<List<Mascota>> xml = new Xml<List<Mascota>>();
 
-            }
-            catch (ArchivosException ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        xml.Leer("Mascota", out List<Mascota> cargaMascotas);
+                        foreach (Mascota item in cargaMascotas)
+                        {
+                            veterinaria += item;
+                            xmlYaIngresado = true;
+                            //this.Refrescar();
+                            //ComenzarAtencion(item);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("No hay medicos de turno", "Informacion", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+
+                }
+                catch (ArchivosException ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
 
         }
@@ -190,7 +207,7 @@ namespace GuardiaVeterinaria
                 {
                     if (item.Dni == dni)
                     {
-                        if(veterinaria != item)
+                        if (veterinaria != item)
                         {
                             //if (veterinaria != medico)
                             //{
@@ -243,6 +260,11 @@ namespace GuardiaVeterinaria
             this.SoloNumeros(sender, e);
         }
 
+        /// <summary>
+        /// Metodo que controla que solo acepta y controla que se ingresen caracteres numéricos
+        /// </summary>
+        /// <param name="sender">El objeto que activó el evento.</param>
+        /// <param name="e">Argumentos del evento que contienen la tecla presionada.</param>
         public void SoloNumeros(object sender, KeyPressEventArgs e)
         {
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))

@@ -1,9 +1,13 @@
 ﻿namespace Archivos
 {
+    /// <summary>
+    /// 13 - Interfaces
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public interface IArchivo<T>
     {
         /// <summary>
-        /// Metodo de tipo Interfaz para guardar un archivo 
+        /// 12 - Generics - Metodo de tipo Interfaz para guardar un archivo 
         /// </summary>
         /// <param name="archivo">ruta del archivo</param>
         /// <param name="datos">datos del archivo</param>

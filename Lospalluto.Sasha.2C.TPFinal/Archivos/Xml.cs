@@ -12,7 +12,7 @@ namespace Archivos
     public class Xml<T> : IArchivo<T>
     {
         /// <summary>
-        /// Guarda un archivo con extension .xml
+        /// 14 - Archivos Guarda un archivo con extension .xml
         /// </summary>
         /// <param name="archivo">ruta del archivo</param>
         /// <param name="datos">se devolverán los datos leidos del archivo</param>
@@ -24,7 +24,12 @@ namespace Archivos
             XmlSerializer serializer;
             try
             {
-                  textWriter = new XmlTextWriter($"C:\\Users\\usuario\\Desktop\\TP_INTEGRADOR2_LABORATORIO2_2C\\Lospalluto.Sasha.2C.TPFinal\\{archivo}_{DateTime.Now.ToString("yyyyMMddHHmmss")}.xml", UTF8Encoding.UTF8);
+                string pathEscritorio = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);//devuelve la ruta del escritorio
+                StringBuilder path = new StringBuilder();
+                path.Append(pathEscritorio);
+                path.AppendFormat("\\{0}_{1}.xml", archivo, DateTime.Now.ToString("yyyyMMddHHmmss"));
+                //14 - Serializacion
+                textWriter = new XmlTextWriter(path.ToString(), UTF8Encoding.UTF8);
                 serializer = new XmlSerializer(typeof(T));
                 serializer.Serialize(textWriter, datos);
                 guardado = true;
@@ -46,7 +51,7 @@ namespace Archivos
         }
 
         /// <summary>
-        /// lee archivo con extension .xml
+        /// 10 – excepciones lee archivo con extension .xml
         /// </summary>
         /// <param name="archivo">ruta del archivo</param>
         /// <param name="datos">datos a leer del archivo</param>
@@ -60,7 +65,11 @@ namespace Archivos
             try
             {
                 serializer = new XmlSerializer(typeof(T));
-                reader = new XmlTextReader($"C:\\Users\\usuario\\Desktop\\TP_INTEGRADOR2_LABORATORIO2_2C\\Lospalluto.Sasha.2C.TPFinal\\{archivo}.xml");
+                string pathEscritorio = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);//devuelve la ruta del escritorio
+                StringBuilder path = new StringBuilder();
+                path.Append(pathEscritorio);
+                path.AppendFormat("\\{0}.xml", archivo);
+                reader = new XmlTextReader(path.ToString());
                 datos = (T)serializer.Deserialize(reader);
                 leido = true;
             }

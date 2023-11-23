@@ -7,9 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "proyecto_veterinaria", "pro
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GuardiaVeterinaria", "GuardiaVeterinaria\GuardiaVeterinaria.csproj", "{95B27D19-A705-41DA-8B39-FD1533DADFE3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Archivos", "Archivos\Archivos.csproj", "{55EC2B1F-54CD-49AF-8926-EC3BE9E8EDA6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Archivos", "Archivos\Archivos.csproj", "{55EC2B1F-54CD-49AF-8926-EC3BE9E8EDA6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Excepciones", "Excepciones\Excepciones.csproj", "{6D8D8DA7-97D0-46CE-90C6-D9CDD3F607C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Excepciones", "Excepciones\Excepciones.csproj", "{6D8D8DA7-97D0-46CE-90C6-D9CDD3F607C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestUnitarios", "TestUnitarios\TestUnitarios.csproj", "{12E710C9-A820-4AAD-84F4-18B6270DB0B6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{6D8D8DA7-97D0-46CE-90C6-D9CDD3F607C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D8D8DA7-97D0-46CE-90C6-D9CDD3F607C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D8D8DA7-97D0-46CE-90C6-D9CDD3F607C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12E710C9-A820-4AAD-84F4-18B6270DB0B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12E710C9-A820-4AAD-84F4-18B6270DB0B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12E710C9-A820-4AAD-84F4-18B6270DB0B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12E710C9-A820-4AAD-84F4-18B6270DB0B6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

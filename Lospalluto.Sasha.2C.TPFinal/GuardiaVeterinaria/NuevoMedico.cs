@@ -37,15 +37,23 @@ namespace GuardiaVeterinaria
                     string apellido = txtApellido.Text;
                     int dni = int.Parse(txtDni.Text);
 
-                    Medico medico = new Medico(nombre,apellido,dni);
-
-                    if (GestorSql.GuardarMedico(medico))
+                    Medico medico = new Medico(nombre, apellido, dni);
+                    if (GestorSql.GetIdMedico(medico) == -1)
                     {
-                        MessageBox.Show("¡Todo se ha cargado correctamente!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        if (GestorSql.GuardarMedico(medico))
+                        {
+                            MessageBox.Show("¡Todo se ha cargado correctamente!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+
+                        mostrarMensaje = false;
+                        this.Visible = false;
+
+                    }
+                    else
+                    {
+                        MessageBox.Show("Ya existe un medico con ese dni", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
 
-                    mostrarMensaje = false;
-                    this.Visible = false;
                 }
             }
             catch (Exception ex)
@@ -73,6 +81,11 @@ namespace GuardiaVeterinaria
                     this.Visible = false;
                 }
             }
+        }
+
+        private void txtDni_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            frmPrincipal.SoloNumeros(sender, e);
         }
     }
 }

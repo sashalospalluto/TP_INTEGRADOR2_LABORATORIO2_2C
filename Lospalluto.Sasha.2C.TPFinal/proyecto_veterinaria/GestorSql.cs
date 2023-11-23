@@ -11,16 +11,25 @@ namespace proyecto_veterinaria
     {
         private static string stringConnection;
 
+        /// <summary>
+        /// Constructor que realiza la conexion a la base de datos
+        /// </summary>
         static GestorSql()
         {
+            // 16 - Conexion a bases de datos
             GestorSql.stringConnection = "Server=.; Database = tp_final; Trusted_Connection = True";
         }
 
+        /// <summary>
+        /// Obtiene todas las mascotas que se encuentran en la BD
+        /// </summary>
+        /// <returns>Lista con las mascotas encontradas en la BD</returns>
         public static List<Mascota> GetMascotas()
         {
             List<Mascota> mascota= new List<Mascota>();
 
             SqlConnection connection = new SqlConnection(GestorSql.stringConnection);
+            // 15 - Introduccion a SQL
             string sentencia = $"SELECT * FROM mascotas";
 
             try
@@ -53,6 +62,10 @@ namespace proyecto_veterinaria
             return mascota;
         }
 
+        /// <summary>
+        /// Obtiene todas los medicos que se encuentran en la BD
+        /// </summary>
+        /// <returns>Lista con los medicos encontrados en la BD</returns>
         public static List<Medico> GetMedicos()
         {
             List<Medico> medicos = new List<Medico>();
@@ -89,6 +102,11 @@ namespace proyecto_veterinaria
             return medicos;
         }
 
+        /// <summary>
+        /// Guarda una mascota en la BD
+        /// </summary>
+        /// <param name="mascota">un paciente de tipo Mascota</param>
+        /// <returns>true si pudo guardarlo, caso contrario devuelve false</returns>
         public static bool GuardarMascota(Mascota mascota)
         {
             bool guardado=false;
@@ -130,6 +148,11 @@ namespace proyecto_veterinaria
             return guardado;
         }
 
+        /// <summary>
+        /// Guarda un medico en la BD
+        /// </summary>
+        /// <param name="medico">un medico de tipo Medico</param>
+        /// <returns>true si pudo guardarlo, caso contrario devuelve false</returns>
         public static bool GuardarMedico(Medico medico)
         {
             bool guardado = false;
@@ -167,6 +190,11 @@ namespace proyecto_veterinaria
             return guardado;
         }
 
+        /// <summary>
+        /// Modifica el IMC de una mascota en la BD
+        /// </summary>
+        /// <param name="mascota">mascota a modificar la BD</param>
+        /// <returns>true si pudo modificarlo, caso contrario devuelve false</returns>
         public static bool ModificarIMC (Mascota mascota)
         {
             bool modificado = false;
@@ -199,6 +227,12 @@ namespace proyecto_veterinaria
             return modificado;
         }
 
+        /// <summary>
+        /// Agrego los datos del medico y el paciente que atendio a la BD
+        /// </summary>
+        /// <param name="mascota">mascota atendida</param>
+        /// <param name="medico">medico que atendio a la mascota</param>
+        /// <returns>true si pudo guardarlo, caso contrario devuelve false</returns>
         public static bool IngresarPacienteAtendido (Mascota mascota, Medico medico)
         {
             bool guardado = false;
@@ -236,6 +270,11 @@ namespace proyecto_veterinaria
             return guardado;
         }
 
+        /// <summary>
+        /// Obtiene el id de la mascota de la BD a partir de una mascota pasada por parametro
+        /// </summary>
+        /// <param name="mascota">mascota para buscar su id</param>
+        /// <returns>devuelve el ID de la mascota encontrada, caso contrario devuelve -1</returns>
         public static int GetIdMascota(Mascota mascota)
         {
             int id = -1;
@@ -270,9 +309,14 @@ namespace proyecto_veterinaria
             return id;
         }
 
+        /// <summary>
+        /// Obtiene el id del medico de la BD a partir de un medico pasado por parametro
+        /// </summary>
+        /// <param name="medico">medico para buscar su id</param>
+        /// <returns>devuelve el ID del medico encontrada, caso contrario devuelve -1</returns>
         public static int GetIdMedico(Medico medico)
         {
-            int id = 0;
+            int id = -1;
             SqlConnection connection = new SqlConnection(GestorSql.stringConnection);
             string sentencia = "SELECT * FROM doctores where dni = @dni";
 

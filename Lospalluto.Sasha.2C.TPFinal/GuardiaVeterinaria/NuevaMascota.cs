@@ -22,8 +22,6 @@ namespace GuardiaVeterinaria
             frmPrincipal = frmVeterinaria;
             mostrarMensaje = true;
             cmbTipoMascota.DropDownStyle = ComboBoxStyle.DropDownList;
-
-
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
@@ -56,7 +54,7 @@ namespace GuardiaVeterinaria
                 }
                 else
                 {
-                    
+
                     string nombre = txtNombreMascota.Text;
                     string nombre_tutor = txtNombreTutor.Text;
                     int dni_tutor = int.Parse(txtDniTutor.Text);
@@ -66,7 +64,7 @@ namespace GuardiaVeterinaria
 
                     Mascota mascotaNueva = Mascota.NuevaMascota(nombre, nombre_tutor, edad, tipo, dni_tutor, peso);
                     //frmPrincipal.todasLasMascotas.Add(mascotaNueva);
-                    if(GestorSql.GetIdMascota(mascotaNueva) == -1)
+                    if (GestorSql.GetIdMascota(mascotaNueva) == -1)
                     {
                         if (GestorSql.GuardarMascota(mascotaNueva))
                         {
@@ -114,9 +112,9 @@ namespace GuardiaVeterinaria
 
         private void txtDniTutor_KeyPress(object sender, KeyPressEventArgs e)
         {
-            frmPrincipal.SoloNumeros(sender,e);
+            frmPrincipal.SoloNumeros(sender, e);
         }
 
-        
+
     }
 }
