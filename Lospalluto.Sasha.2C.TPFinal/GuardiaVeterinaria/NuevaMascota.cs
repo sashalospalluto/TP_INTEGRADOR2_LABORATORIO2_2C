@@ -56,6 +56,7 @@ namespace GuardiaVeterinaria
                 }
                 else
                 {
+                    
                     string nombre = txtNombreMascota.Text;
                     string nombre_tutor = txtNombreTutor.Text;
                     int dni_tutor = int.Parse(txtDniTutor.Text);
@@ -65,14 +66,24 @@ namespace GuardiaVeterinaria
 
                     Mascota mascotaNueva = Mascota.NuevaMascota(nombre, nombre_tutor, edad, tipo, dni_tutor, peso);
                     //frmPrincipal.todasLasMascotas.Add(mascotaNueva);
-
-                    if (GestorSql.GuardarMascota(mascotaNueva))
+                    if(GestorSql.GetIdMascota(mascotaNueva) == -1)
                     {
-                        MessageBox.Show("¡Todo se ha cargado correctamente!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        if (GestorSql.GuardarMascota(mascotaNueva))
+                        {
+                            MessageBox.Show("¡Todo se ha cargado correctamente!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            mostrarMensaje = false;
+                            this.Visible = false;
+                        }
+                        else
+                        {
+                            MessageBox.Show("No se pudo guardar la mascota", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Ya existe una mascota con ese dni", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
 
-                    mostrarMensaje = false;
-                    this.Visible = false;
                 }
             }
             catch (Exception ex)

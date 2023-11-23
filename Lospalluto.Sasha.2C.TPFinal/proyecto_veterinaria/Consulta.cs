@@ -11,6 +11,7 @@ namespace proyecto_veterinaria
         public Mascota Paciente { get; set; }
         public Medico Medico { get; set; }
 
+        public Consulta() { }
         public Consulta(Mascota paciente, Medico medico)
         {
             Paciente = paciente;

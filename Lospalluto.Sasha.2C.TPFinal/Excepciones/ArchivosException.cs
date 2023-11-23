@@ -2,12 +2,12 @@
 {
     public class ArchivosException : Exception
     {
-        public ArchivosException(Exception innerException) : base("ocurrio un error", innerException)
+        public ArchivosException(Exception innerException) : base("ocurrio un error con el archivo", innerException)
         {
 
         }
 
-        public ArchivosException() : base("ocurrio un error")
+        public ArchivosException() : base("ocurrio un error con el archivo")
         {
 
         }

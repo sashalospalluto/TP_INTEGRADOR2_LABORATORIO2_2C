@@ -41,6 +41,14 @@ namespace proyecto_veterinaria
             }
         }
 
+        public List<Medico> Medicos
+        {
+            get
+            {
+                return this.medicos;
+            }
+        }
+
         public List<Mascota> MascotasAtendiendose
         {
             get
@@ -178,11 +186,19 @@ namespace proyecto_veterinaria
             bool seEncuentra = false;
             if (veterinaria.medicos.Count > 0)
             {
-                Medico unMedico = veterinaria.medicos.Find(m => m == medico);
-                if (unMedico is not null)
+                //Medico unMedico = veterinaria.medicos.Find(m => m == medico);
+                foreach (Medico item in veterinaria.medicos)
                 {
-                    seEncuentra = true;
+                    if(item == medico)
+                    {
+                        seEncuentra = true;
+                        break;
+                    }
                 }
+                //if (unMedico is not null)
+                //{
+                  //  seEncuentra = true;
+                //}
             }
             return seEncuentra;
         }

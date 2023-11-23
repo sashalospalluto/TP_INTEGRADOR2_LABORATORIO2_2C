@@ -238,7 +238,7 @@ namespace proyecto_veterinaria
 
         public static int GetIdMascota(Mascota mascota)
         {
-            int id = 0;
+            int id = -1;
             SqlConnection connection = new SqlConnection(GestorSql.stringConnection);
             string sentencia = "SELECT * FROM mascotas where dni_tutor = @dni";
 

@@ -1,4 +1,5 @@
 using Archivos;
+using Excepciones;
 using proyecto_veterinaria;
 
 namespace GuardiaVeterinaria
@@ -22,7 +23,7 @@ namespace GuardiaVeterinaria
             InitializeComponent();
             cancellationTokenSource = new CancellationTokenSource();
             cancellationToken = cancellationTokenSource.Token;
-            veterinaria = new Veterinaria(5);
+            veterinaria = new Veterinaria();
             todasLasMascotas = new List<Mascota>();
             todasLasMascotas = GestorSql.GetMascotas();
             todosLosMedicos = new List<Medico>();
@@ -107,10 +108,18 @@ namespace GuardiaVeterinaria
         {
             if (lstPacienteEncontrado.Items.Count > 0 && veterinaria != mascota)
             {
-                veterinaria += mascota;
-                this.Refrescar();
-                lstPacienteEncontrado.Items.Clear();
-                //ComenzarAtencion(mascota);
+                if(veterinaria.Medicos.Count > 0)
+                {
+                    veterinaria += mascota;
+                    this.Refrescar();
+                    lstPacienteEncontrado.Items.Clear();
+                    txtDniTutor.Text = null;
+                    //ComenzarAtencion(mascota);
+                }
+                else
+                {
+                    MessageBox.Show("No hay medicos de turno", "Informacion", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
             else
             {
@@ -120,20 +129,43 @@ namespace GuardiaVeterinaria
 
         private void btnCerrarVeterinaria_Click(object sender, EventArgs e)
         {
-            Veterinaria.Guardar(veterinaria);
-            this.Close();
+            try
+            {
+                Veterinaria.Guardar(veterinaria);
+                MessageBox.Show("Archivo guardado correctamente", "Archivo guardado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.Close();
+            }
+            catch (ArchivosException ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnIngresarPacientesXml_Click(object sender, EventArgs e)
         {
-            Xml<List<Mascota>> xml = new Xml<List<Mascota>>();
-
-            xml.Leer("Mascota", out List<Mascota> cargaMascotas);
-            foreach (Mascota item in cargaMascotas)
+            try
             {
-                veterinaria += item;
-                //this.Refrescar();
-                //ComenzarAtencion(item);
+                if(veterinaria.Medicos.Count > 0)
+                {
+                    Xml<List<Mascota>> xml = new Xml<List<Mascota>>();
+
+                    xml.Leer("Mascota", out List<Mascota> cargaMascotas);
+                    foreach (Mascota item in cargaMascotas)
+                    {
+                        veterinaria += item;
+                        //this.Refrescar();
+                        //ComenzarAtencion(item);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("No hay medicos de turno", "Informacion", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+
+            }
+            catch (ArchivosException ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }
@@ -158,14 +190,22 @@ namespace GuardiaVeterinaria
                 {
                     if (item.Dni == dni)
                     {
-                        medico = item;
-
-                        if (veterinaria != medico)
+                        if(veterinaria != item)
                         {
-                            veterinaria += medico;
+                            //if (veterinaria != medico)
+                            //{
+                            veterinaria += item;
                             this.Refrescar();
                             MessageBox.Show("Medico ingresado al turno laboral correctamente", "Dato Encontrado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            encontrado = true;
+                            txtDniMedico.Text = null;
                             break;
+                            //}
+                        }
+                        else
+                        {
+                            MessageBox.Show("El medico ya esta dado de alta en el turno actual", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            encontrado = true;
                         }
                     }
                 }
