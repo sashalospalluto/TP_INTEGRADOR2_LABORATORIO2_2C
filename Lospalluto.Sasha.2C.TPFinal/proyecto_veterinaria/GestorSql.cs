@@ -214,7 +214,7 @@ namespace proyecto_veterinaria
                 SqlCommand command = new SqlCommand(sentencia, connection);
                 command.Parameters.AddWithValue("@id_doctor", GestorSql.GetIdMedico(medico));
                 command.Parameters.AddWithValue("@id_mascota", GestorSql.GetIdMascota(mascota));
-                command.Parameters.AddWithValue("@hora_consulta", DateTime.Now);
+                command.Parameters.AddWithValue("@hora_consulta", DateTime.Now.ToString());
 
                 command.ExecuteNonQuery();
                 guardado = true;
@@ -240,16 +240,20 @@ namespace proyecto_veterinaria
         {
             int id = 0;
             SqlConnection connection = new SqlConnection(GestorSql.stringConnection);
-            string sentencia = $"SELECT id FROM mascotas where dni_tutor = {mascota.Dni_tutor}";
+            string sentencia = "SELECT * FROM mascotas where dni_tutor = @dni";
 
             try
             {
                 SqlCommand command = new SqlCommand(sentencia, connection);
+                command.Parameters.AddWithValue("@dni", mascota.Dni_tutor);
                 connection.Open();
 
                 SqlDataReader reader = command.ExecuteReader();
 
-                id = reader.GetInt32(0);
+                if (reader.Read())
+                {
+                    id = int.Parse(reader["id"].ToString());
+                }
             }
             catch (Exception ex)
             {
@@ -270,16 +274,20 @@ namespace proyecto_veterinaria
         {
             int id = 0;
             SqlConnection connection = new SqlConnection(GestorSql.stringConnection);
-            string sentencia = $"SELECT id FROM medicos where dni = {medico.Dni}";
+            string sentencia = "SELECT * FROM doctores where dni = @dni";
 
             try
             {
                 SqlCommand command = new SqlCommand(sentencia, connection);
+                command.Parameters.AddWithValue("@dni", medico.Dni);
                 connection.Open();
 
                 SqlDataReader reader = command.ExecuteReader();
 
-                id = reader.GetInt32(0);
+                if(reader.Read())
+                {
+                    id = int.Parse(reader["id"].ToString());
+                }
             }
             catch (Exception ex)
             {

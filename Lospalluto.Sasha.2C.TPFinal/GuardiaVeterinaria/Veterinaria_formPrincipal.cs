@@ -3,17 +3,23 @@ using proyecto_veterinaria;
 
 namespace GuardiaVeterinaria
 {
+
     public partial class GuardiaVeterinaria : Form
     {
+        CancellationTokenSource cancellationTokenSource;
+        CancellationToken cancellationToken;
         public Veterinaria veterinaria;
         public Mascota mascota;
         public Medico medico;
         public List<Mascota> todasLasMascotas;
         public List<Medico> todosLosMedicos;
 
+
         public GuardiaVeterinaria()
         {
             InitializeComponent();
+            cancellationTokenSource = new CancellationTokenSource();
+            cancellationToken = cancellationTokenSource.Token;
             veterinaria = new Veterinaria(5);
             todasLasMascotas = new List<Mascota>();
             todasLasMascotas = GestorSql.GetMascotas();
@@ -25,13 +31,17 @@ namespace GuardiaVeterinaria
         {
             FrmNuevaMascota frmNuevaMascota = new FrmNuevaMascota(this);
             frmNuevaMascota.ShowDialog();
+
             this.Refrescar();
+
         }
 
         private void Refrescar()
         {
             this.lstSalaDeEspera.DataSource = null;
             this.lstSalaDeEspera.DataSource = veterinaria.Mascotas;
+            this.lstEnAtencionMedica.DataSource = veterinaria.MascotasAtendiendose;
+            this.lstAtendidos.DataSource = veterinaria.MascotasAtendidas;
             todasLasMascotas = GestorSql.GetMascotas();
             todosLosMedicos = GestorSql.GetMedicos();
         }
@@ -71,12 +81,17 @@ namespace GuardiaVeterinaria
                 veterinaria += mascota;
                 this.Refrescar();
 
-                //arranca el hilo
-                Task.Run(() =>
-                {
 
+                //arranca el hilo
+                veterinaria.Atender += veterinaria.PacienteAtendido;
+
+
+                Task.Run(() =>{ 
+                    veterinaria.AtenderPaciente(mascota);
+                    this.Refrescar();
                 });
                 
+
             }
         }
 

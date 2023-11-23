@@ -2,16 +2,17 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace proyecto_veterinaria
 {
-    public delegate void AtenderEventHandler(Mascota mascota);
+    public delegate bool AtenderPacienteEventHandler(Mascota mascota);
     public class Veterinaria
     {
-        public event AtenderEventHandler Atender;
+        public event AtenderPacienteEventHandler Atender;
         private List<Mascota> mascotas;
         private List<Mascota> mascotasAtendiendose;
         private List<Mascota> mascotasAtendidas;
@@ -23,9 +24,27 @@ namespace proyecto_veterinaria
         {
             this.mascotas = new List<Mascota>();
             this.medicos = new List<Medico>();
+            this.mascotasAtendiendose = new List<Mascota>();
+            this.mascotasAtendidas = new List<Mascota>();
         }
 
         public List<Mascota> Mascotas
+        {
+            get
+            {
+                return this.mascotas;
+            }
+        }
+
+        public List<Mascota> MascotasAtendiendose
+        {
+            get
+            {
+                return this.mascotas;
+            }
+        }
+
+        public List<Mascota> MascotasAtendidas
         {
             get
             {
@@ -169,15 +188,34 @@ namespace proyecto_veterinaria
             return pacienteAtendido;
         }
 
-        public bool AtendiendoPaciente(Mascota mascota)
+        public bool AtenderPaciente(Mascota mascota)
         {
             bool atendido = false;
 
-            if(GestorSql.IngresarPacienteAtendido(mascota, this.MedicoRandom(medicos)))
+            if(this.CargarFicha(mascota))
             {
+                atendido = true;
                 this.mascotas.Remove(mascota);
                 this.mascotasAtendiendose.Add(mascota);
-                atendido = true;
+                Thread.Sleep(2000);
+                Atender.Invoke(mascota);
+            }
+
+            return atendido;
+        }
+
+        public bool PacienteAtendido(Mascota mascota)
+        {
+            bool atendido = false;
+
+            if(this.Atender is not null)
+            {
+                if (GestorSql.IngresarPacienteAtendido(mascota, this.MedicoRandom(medicos)))
+                {
+                    this.mascotasAtendiendose.Remove(mascota);
+                    this.mascotasAtendidas.Add(mascota);
+                    atendido = true;
+                }
             }
 
             return atendido;

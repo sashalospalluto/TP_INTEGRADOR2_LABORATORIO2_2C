@@ -30,9 +30,9 @@
         {
             label1 = new Label();
             lstSalaDeEspera = new ListBox();
-            listBox2 = new ListBox();
+            lstEnAtencionMedica = new ListBox();
             label2 = new Label();
-            listBox3 = new ListBox();
+            lstAtendidos = new ListBox();
             label3 = new Label();
             label4 = new Label();
             label5 = new Label();
@@ -69,14 +69,14 @@
             lstSalaDeEspera.Size = new Size(356, 139);
             lstSalaDeEspera.TabIndex = 1;
             // 
-            // listBox2
+            // lstEnAtencionMedica
             // 
-            listBox2.FormattingEnabled = true;
-            listBox2.ItemHeight = 15;
-            listBox2.Location = new Point(374, 324);
-            listBox2.Name = "listBox2";
-            listBox2.Size = new Size(356, 139);
-            listBox2.TabIndex = 2;
+            lstEnAtencionMedica.FormattingEnabled = true;
+            lstEnAtencionMedica.ItemHeight = 15;
+            lstEnAtencionMedica.Location = new Point(374, 324);
+            lstEnAtencionMedica.Name = "lstEnAtencionMedica";
+            lstEnAtencionMedica.Size = new Size(356, 139);
+            lstEnAtencionMedica.TabIndex = 2;
             // 
             // label2
             // 
@@ -87,14 +87,14 @@
             label2.TabIndex = 3;
             label2.Text = "Sala de espera";
             // 
-            // listBox3
+            // lstAtendidos
             // 
-            listBox3.FormattingEnabled = true;
-            listBox3.ItemHeight = 15;
-            listBox3.Location = new Point(736, 324);
-            listBox3.Name = "listBox3";
-            listBox3.Size = new Size(356, 139);
-            listBox3.TabIndex = 4;
+            lstAtendidos.FormattingEnabled = true;
+            lstAtendidos.ItemHeight = 15;
+            lstAtendidos.Location = new Point(736, 324);
+            lstAtendidos.Name = "lstAtendidos";
+            lstAtendidos.Size = new Size(356, 139);
+            lstAtendidos.TabIndex = 4;
             // 
             // label3
             // 
@@ -264,9 +264,9 @@
             Controls.Add(label5);
             Controls.Add(label4);
             Controls.Add(label3);
-            Controls.Add(listBox3);
+            Controls.Add(lstAtendidos);
             Controls.Add(label2);
-            Controls.Add(listBox2);
+            Controls.Add(lstEnAtencionMedica);
             Controls.Add(lstSalaDeEspera);
             Controls.Add(label1);
             Name = "GuardiaVeterinaria";
@@ -280,9 +280,9 @@
 
         private Label label1;
         private ListBox lstSalaDeEspera;
-        private ListBox listBox2;
+        private ListBox lstEnAtencionMedica;
         private Label label2;
-        private ListBox listBox3;
+        private ListBox lstAtendidos;
         private Label label3;
         private Label label4;
         private Label label5;
