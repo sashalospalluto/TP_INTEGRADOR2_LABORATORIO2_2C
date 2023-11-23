@@ -9,15 +9,19 @@ using System.Threading.Tasks;
 
 namespace proyecto_veterinaria
 {
-    public delegate bool AtenderPacienteEventHandler(Mascota mascota);
+    public delegate bool AtenderPacienteEventHandler(Mascota mascota, Medico medico);
     public class Veterinaria
     {
+        public delegate void ActualizarPacientesEventHandler(object sender, EventArgs e);
         public event AtenderPacienteEventHandler Atender;
+        public event ActualizarPacientesEventHandler InformarModificacion;
         private List<Mascota> mascotas;
         private List<Mascota> mascotasAtendiendose;
         private List<Mascota> mascotasAtendidas;
         private List<Medico> medicos;
         public int cantidadMaxEnGuardia;
+        private List<Consulta> consultasGuardadas;
+
 
 
         public Veterinaria()
@@ -26,6 +30,7 @@ namespace proyecto_veterinaria
             this.medicos = new List<Medico>();
             this.mascotasAtendiendose = new List<Mascota>();
             this.mascotasAtendidas = new List<Mascota>();
+            this.consultasGuardadas = new List<Consulta>();
         }
 
         public List<Mascota> Mascotas
@@ -40,7 +45,7 @@ namespace proyecto_veterinaria
         {
             get
             {
-                return this.mascotas;
+                return this.mascotasAtendiendose;
             }
         }
 
@@ -48,7 +53,15 @@ namespace proyecto_veterinaria
         {
             get
             {
-                return this.mascotas;
+                return this.mascotasAtendidas;
+            }
+        }
+
+        public List<Consulta> ConsultasGuardadas
+        {
+            get
+            {
+                return this.consultasGuardadas;
             }
         }
 
@@ -60,6 +73,7 @@ namespace proyecto_veterinaria
         public static Veterinaria operator +(Veterinaria veterinaria, Mascota mascota)
         {
             bool existe = false;
+            Medico medico;
 
             if (veterinaria.mascotas.Count > 0)
             {
@@ -68,6 +82,7 @@ namespace proyecto_veterinaria
                     if (item == mascota)
                     {
                         existe = true;
+
                         break;
                     }
                 }
@@ -76,6 +91,13 @@ namespace proyecto_veterinaria
             if (!existe)
             {
                 veterinaria.mascotas.Add(mascota);
+                //do
+                //{
+                    medico = veterinaria.AsignarUnMedico(veterinaria.medicos, mascota);
+                    Task tarea = Task.Run(() => {
+                        veterinaria.AtenderPaciente(mascota,medico);
+                    });
+                //} while (medico is null);
             }
             return veterinaria;
         }
@@ -90,6 +112,7 @@ namespace proyecto_veterinaria
                 {
                     if (item == medico)
                     {
+
                         existe = true;
                         break;
                     }
@@ -188,32 +211,46 @@ namespace proyecto_veterinaria
             return pacienteAtendido;
         }
 
-        public bool AtenderPaciente(Mascota mascota)
+        public bool AtenderPaciente(Mascota mascota, Medico medico)
         {
             bool atendido = false;
+            Random random = new Random();
 
-            if(this.CargarFicha(mascota))
+            if (this.CargarFicha(mascota))
             {
                 atendido = true;
+                Thread.Sleep(random.Next(1000, 6000));
                 this.mascotas.Remove(mascota);
+                //Thread.Sleep(random.Next(1000, 6000));
+                //this.InformarModificacion.Invoke(this, EventArgs.Empty);
                 this.mascotasAtendiendose.Add(mascota);
-                Thread.Sleep(2000);
-                Atender.Invoke(mascota);
+                this.InformarModificacion.Invoke(this, EventArgs.Empty);
+                Thread.Sleep(random.Next(6000, 8000));
+                //medico = this.AsignarUnMedico(medicos, mascota);
+                Atender.Invoke(mascota,medico);
             }
 
             return atendido;
         }
 
-        public bool PacienteAtendido(Mascota mascota)
+        public bool PacienteAtendido(Mascota mascota, Medico medico)
         {
             bool atendido = false;
 
-            if(this.Atender is not null)
+            if (this.Atender is not null)
             {
-                if (GestorSql.IngresarPacienteAtendido(mascota, this.MedicoRandom(medicos)))
+                if (GestorSql.IngresarPacienteAtendido(mascota, medico))
                 {
                     this.mascotasAtendiendose.Remove(mascota);
                     this.mascotasAtendidas.Add(mascota);
+                    Consulta consultaEncontrada = this.consultasGuardadas.Find(m=> m.Medico == medico);
+
+                    if (consultaEncontrada != null)
+                    {
+                        consultaEncontrada.Medico.Atendiendo = false;
+                    }
+                    this.InformarModificacion.Invoke(this, EventArgs.Empty);
+                    
                     atendido = true;
                 }
             }
@@ -221,16 +258,50 @@ namespace proyecto_veterinaria
             return atendido;
         }
 
-        public Medico MedicoRandom(List<Medico> medico)
+        public Medico MedicoRandom(List<Medico> medicos)
         {
-            if(medico.Count != 0)
+            Medico unMedico = null;
+            bool encontroUno = false;
+
+            while (!encontroUno)
             {
-                Random rnd = new Random();
-                int indiceAleatorio = rnd.Next(medico.Count);
-                Medico unMedico = medico[indiceAleatorio];
-                return unMedico;
+                if (medicos.Count != 0)
+                {
+                    foreach (Medico medico in medicos)
+                    {
+                        //if (medico.Atendiendo == false)
+                        //{
+                            unMedico = medico;
+                            encontroUno = true;
+                            break;
+                        //}
+                    }
+                }
             }
-            return null;
+            return unMedico;
+        }
+
+        public Medico AsignarUnMedico(List<Medico> medicos, Mascota mascota)
+        {
+            Medico unMedico = null;
+            bool encontroUno = false;
+
+            if (medicos.Count != 0)
+            {
+                foreach (Medico medico in medicos)
+                {
+                    //if (medico.Atendiendo == false)
+                    //{
+                        unMedico = medico;
+                        encontroUno = true;
+                        this.consultasGuardadas.Add(new Consulta(mascota, medico));
+                        medico.Atendiendo = true;
+                        break;
+                    //}
+                }
+            }
+            
+            return unMedico;
         }
     }
 }

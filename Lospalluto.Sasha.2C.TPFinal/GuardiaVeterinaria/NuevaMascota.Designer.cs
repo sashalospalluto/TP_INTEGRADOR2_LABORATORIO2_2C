@@ -43,6 +43,7 @@
             txtPeso = new TextBox();
             txtNombreTutor = new TextBox();
             txtDniTutor = new TextBox();
+            label8 = new Label();
             SuspendLayout();
             // 
             // btnAgregarMascota
@@ -104,6 +105,7 @@
             // txtNombreMascota
             // 
             txtNombreMascota.Location = new Point(328, 90);
+            txtNombreMascota.MaxLength = 15;
             txtNombreMascota.Name = "txtNombreMascota";
             txtNombreMascota.Size = new Size(100, 23);
             txtNombreMascota.TabIndex = 6;
@@ -147,20 +149,25 @@
             // txtEdad
             // 
             txtEdad.Location = new Point(328, 152);
+            txtEdad.MaxLength = 2;
             txtEdad.Name = "txtEdad";
             txtEdad.Size = new Size(100, 23);
             txtEdad.TabIndex = 11;
+            txtEdad.KeyPress += txtEdad_KeyPress;
             // 
             // txtPeso
             // 
             txtPeso.Location = new Point(328, 186);
+            txtPeso.MaxLength = 2;
             txtPeso.Name = "txtPeso";
             txtPeso.Size = new Size(100, 23);
             txtPeso.TabIndex = 12;
+            txtPeso.KeyPress += txtPeso_KeyPress;
             // 
             // txtNombreTutor
             // 
             txtNombreTutor.Location = new Point(328, 215);
+            txtNombreTutor.MaxLength = 20;
             txtNombreTutor.Name = "txtNombreTutor";
             txtNombreTutor.Size = new Size(100, 23);
             txtNombreTutor.TabIndex = 13;
@@ -168,15 +175,27 @@
             // txtDniTutor
             // 
             txtDniTutor.Location = new Point(328, 244);
+            txtDniTutor.MaxLength = 8;
             txtDniTutor.Name = "txtDniTutor";
             txtDniTutor.Size = new Size(100, 23);
             txtDniTutor.TabIndex = 14;
+            txtDniTutor.KeyPress += txtDniTutor_KeyPress;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Location = new Point(434, 189);
+            label8.Name = "label8";
+            label8.Size = new Size(21, 15);
+            label8.TabIndex = 15;
+            label8.Text = "KG";
             // 
             // FrmNuevaMascota
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(label8);
             Controls.Add(txtDniTutor);
             Controls.Add(txtNombreTutor);
             Controls.Add(txtPeso);
@@ -217,5 +236,6 @@
         private TextBox txtPeso;
         private TextBox txtNombreTutor;
         private TextBox txtDniTutor;
+        private Label label8;
     }
 }

@@ -24,7 +24,7 @@ namespace Archivos
             XmlSerializer serializer;
             try
             {
-                  textWriter = new XmlTextWriter($"{archivo}_{DateTime.Now.ToString("yyyyMMddHHmmss")}.xml", UTF8Encoding.UTF8);
+                  textWriter = new XmlTextWriter($"C:\\Users\\usuario\\Desktop\\TP_INTEGRADOR2_LABORATORIO2_2C\\Lospalluto.Sasha.2C.TPFinal\\{archivo}_{DateTime.Now.ToString("yyyyMMddHHmmss")}.xml", UTF8Encoding.UTF8);
                 serializer = new XmlSerializer(typeof(T));
                 serializer.Serialize(textWriter, datos);
                 guardado = true;
@@ -60,7 +60,7 @@ namespace Archivos
             try
             {
                 serializer = new XmlSerializer(typeof(T));
-                reader = new XmlTextReader($"{archivo}.xml");
+                reader = new XmlTextReader($"C:\\Users\\usuario\\Desktop\\TP_INTEGRADOR2_LABORATORIO2_2C\\Lospalluto.Sasha.2C.TPFinal\\{archivo}.xml");
                 datos = (T)serializer.Deserialize(reader);
                 leido = true;
             }

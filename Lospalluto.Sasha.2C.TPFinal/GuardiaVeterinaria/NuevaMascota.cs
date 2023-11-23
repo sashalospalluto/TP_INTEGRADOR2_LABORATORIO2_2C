@@ -23,6 +23,7 @@ namespace GuardiaVeterinaria
             mostrarMensaje = true;
             cmbTipoMascota.DropDownStyle = ComboBoxStyle.DropDownList;
 
+
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
@@ -49,7 +50,7 @@ namespace GuardiaVeterinaria
         {
             try
             {
-                if(txtNombreMascota.Text.Length == 0 || txtNombreTutor.Text.Length == 0 || txtDniTutor.Text.Length == 0 || txtEdad.Text.Length == 0 || txtPeso.Text.Length == 0) 
+                if (txtNombreMascota.Text.Length == 0 || txtNombreTutor.Text.Length == 0 || txtDniTutor.Text.Length == 0 || txtEdad.Text.Length == 0 || txtPeso.Text.Length == 0)
                 {
                     MessageBox.Show("Todos los campos son obligatorios, vuelva a intentar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -62,14 +63,14 @@ namespace GuardiaVeterinaria
                     ETipoMascota tipo = (Mascota.ETipoMascota)Enum.Parse(typeof(Mascota.ETipoMascota), cmbTipoMascota.SelectedItem.ToString());
                     string peso = txtPeso.Text;
 
-                    Mascota mascotaNueva = Mascota.NuevaMascota(nombre, nombre_tutor, edad, tipo, dni_tutor,peso);
+                    Mascota mascotaNueva = Mascota.NuevaMascota(nombre, nombre_tutor, edad, tipo, dni_tutor, peso);
                     //frmPrincipal.todasLasMascotas.Add(mascotaNueva);
 
-                    if(GestorSql.GuardarMascota(mascotaNueva))
+                    if (GestorSql.GuardarMascota(mascotaNueva))
                     {
                         MessageBox.Show("¡Todo se ha cargado correctamente!", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
-                    
+
                     mostrarMensaje = false;
                     this.Visible = false;
                 }
@@ -77,7 +78,7 @@ namespace GuardiaVeterinaria
             catch (Exception ex)
             {
 
-              MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -89,5 +90,22 @@ namespace GuardiaVeterinaria
                 "Gato"
             };
         }
+
+        private void txtEdad_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            frmPrincipal.SoloNumeros(sender, e);
+        }
+
+        private void txtPeso_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            frmPrincipal.SoloNumeros(sender, e);
+        }
+
+        private void txtDniTutor_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            frmPrincipal.SoloNumeros(sender,e);
+        }
+
+        
     }
 }

@@ -138,6 +138,7 @@
             txtDniTutor.Name = "txtDniTutor";
             txtDniTutor.Size = new Size(100, 23);
             txtDniTutor.TabIndex = 9;
+            txtDniTutor.KeyPress += txtDniTutor_KeyPress;
             // 
             // btnBuscarMascota
             // 
@@ -183,6 +184,7 @@
             txtDniMedico.Name = "txtDniMedico";
             txtDniMedico.Size = new Size(100, 23);
             txtDniMedico.TabIndex = 15;
+            txtDniMedico.KeyPress += txtDniMedico_KeyPress;
             // 
             // label8
             // 
@@ -271,6 +273,7 @@
             Controls.Add(label1);
             Name = "GuardiaVeterinaria";
             Text = "Lospalluto.Sasha.2C";
+            FormClosing += GuardiaVeterinaria_FormClosing;
             Load += GuardiaVeterinaria_Load;
             ResumeLayout(false);
             PerformLayout();

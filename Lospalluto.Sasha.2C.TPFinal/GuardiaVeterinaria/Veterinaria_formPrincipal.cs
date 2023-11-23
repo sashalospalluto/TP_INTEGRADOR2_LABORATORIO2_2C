@@ -3,7 +3,7 @@ using proyecto_veterinaria;
 
 namespace GuardiaVeterinaria
 {
-
+    public delegate void InformarEstadoEventHandler();
     public partial class GuardiaVeterinaria : Form
     {
         CancellationTokenSource cancellationTokenSource;
@@ -13,6 +13,8 @@ namespace GuardiaVeterinaria
         public Medico medico;
         public List<Mascota> todasLasMascotas;
         public List<Medico> todosLosMedicos;
+        public InformarEstadoEventHandler informarEstado;
+
 
 
         public GuardiaVeterinaria()
@@ -25,6 +27,8 @@ namespace GuardiaVeterinaria
             todasLasMascotas = GestorSql.GetMascotas();
             todosLosMedicos = new List<Medico>();
             todosLosMedicos = GestorSql.GetMedicos();
+            veterinaria.InformarModificacion += RefrescarForm;
+            veterinaria.Atender += veterinaria.PacienteAtendido;
         }
 
         private void btnNuevaMascota_Click(object sender, EventArgs e)
@@ -36,11 +40,26 @@ namespace GuardiaVeterinaria
 
         }
 
+        private void RefrescarForm(object sender, EventArgs e)
+        {
+            if (this.InvokeRequired)
+            {
+                Veterinaria.ActualizarPacientesEventHandler v = new Veterinaria.ActualizarPacientesEventHandler(RefrescarForm);
+                this.Invoke(v, new object[] { sender, e });
+            }
+            else
+            {
+                Refrescar();
+            }
+        }
+
         private void Refrescar()
         {
             this.lstSalaDeEspera.DataSource = null;
             this.lstSalaDeEspera.DataSource = veterinaria.Mascotas;
+            this.lstEnAtencionMedica.DataSource = null;
             this.lstEnAtencionMedica.DataSource = veterinaria.MascotasAtendiendose;
+            this.lstAtendidos.DataSource = null;
             this.lstAtendidos.DataSource = veterinaria.MascotasAtendidas;
             todasLasMascotas = GestorSql.GetMascotas();
             todosLosMedicos = GestorSql.GetMedicos();
@@ -55,8 +74,9 @@ namespace GuardiaVeterinaria
         {
             lstPacienteEncontrado.Items.Clear();
             mascota = null;
+            bool encontrado = false;
 
-            if (txtDniTutor.Text.Length > 0)
+            if (txtDniTutor.Text.Length > 0 && txtDniTutor.Text.Length < 9)
             {
                 int dni = int.Parse(txtDniTutor.Text);
 
@@ -67,10 +87,19 @@ namespace GuardiaVeterinaria
                         mascota = item;
                         MessageBox.Show("Se encontró el dato buscado.", "Dato Encontrado", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         lstPacienteEncontrado.Items.Add(mascota);
-
+                        encontrado = true;
                         break;
                     }
                 }
+
+                if (!encontrado)
+                {
+                    MessageBox.Show("No se encontró el paciente", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Ingrese un dni valido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -80,24 +109,19 @@ namespace GuardiaVeterinaria
             {
                 veterinaria += mascota;
                 this.Refrescar();
-
-
-                //arranca el hilo
-                veterinaria.Atender += veterinaria.PacienteAtendido;
-
-
-                Task.Run(() =>{ 
-                    veterinaria.AtenderPaciente(mascota);
-                    this.Refrescar();
-                });
-                
-
+                lstPacienteEncontrado.Items.Clear();
+                //ComenzarAtencion(mascota);
+            }
+            else
+            {
+                MessageBox.Show("Primero debe ingresar un dni valido", "Informacion", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
         private void btnCerrarVeterinaria_Click(object sender, EventArgs e)
         {
             Veterinaria.Guardar(veterinaria);
+            this.Close();
         }
 
         private void btnIngresarPacientesXml_Click(object sender, EventArgs e)
@@ -108,7 +132,8 @@ namespace GuardiaVeterinaria
             foreach (Mascota item in cargaMascotas)
             {
                 veterinaria += item;
-                this.Refrescar();
+                //this.Refrescar();
+                //ComenzarAtencion(item);
             }
 
         }
@@ -123,8 +148,9 @@ namespace GuardiaVeterinaria
         private void btnIngresarMedico_Click(object sender, EventArgs e)
         {
             medico = null;
+            bool encontrado = false;
 
-            if (txtDniMedico.Text.Length > 0)
+            if (txtDniMedico.Text.Length > 0 && txtDniMedico.Text.Length < 9)
             {
                 int dni = int.Parse(txtDniMedico.Text);
 
@@ -138,11 +164,50 @@ namespace GuardiaVeterinaria
                         {
                             veterinaria += medico;
                             this.Refrescar();
-                            MessageBox.Show("Medico ingresado al turno correctamente", "Dato Encontrado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBox.Show("Medico ingresado al turno laboral correctamente", "Dato Encontrado", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             break;
                         }
                     }
                 }
+
+                if (!encontrado)
+                {
+                    MessageBox.Show("No se encontró el medico", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Ingrese un dni valido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void GuardiaVeterinaria_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (MessageBox.Show("¿Desea cerrar la veterinaria?", "Salir", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+            {
+                e.Cancel = true; //no deja que se cierre 
+            }
+            else
+            {
+                this.Visible = false;
+            }
+        }
+
+        private void txtDniTutor_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            this.SoloNumeros(sender, e);
+        }
+
+        private void txtDniMedico_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            this.SoloNumeros(sender, e);
+        }
+
+        public void SoloNumeros(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
             }
         }
     }

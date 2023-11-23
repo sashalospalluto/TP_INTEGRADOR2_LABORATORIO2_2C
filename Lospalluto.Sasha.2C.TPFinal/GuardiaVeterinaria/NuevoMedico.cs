@@ -64,7 +64,7 @@ namespace GuardiaVeterinaria
         {
             if (mostrarMensaje)
             {
-                if (MessageBox.Show("¿Desea cancelar la carga del paciente nuevo?", "Salir", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                if (MessageBox.Show("¿Desea cancelar la carga del medico nuevo?", "Salir", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                 {
                     e.Cancel = true; //no deja que se cierre 
                 }

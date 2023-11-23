@@ -13,6 +13,7 @@ namespace proyecto_veterinaria
         private string nombre;
         private string apellido;
         private int dni;
+        private bool atendiendo;
 
         public string Nombre { get => nombre; set => nombre = value; }
         public string Apellido { get => apellido; set => apellido = value; }
@@ -36,6 +37,8 @@ namespace proyecto_veterinaria
 
         }
 
+        public bool Atendiendo { get => atendiendo; set => atendiendo = value; }
+
         public Medico()
         {
 
@@ -46,6 +49,7 @@ namespace proyecto_veterinaria
             this.nombre = nombre;
             this.apellido = apellido;
             this.dni = dni;
+            Atendiendo = false;
         }
 
         public static bool operator ==(Medico medico1, Medico medico2)
