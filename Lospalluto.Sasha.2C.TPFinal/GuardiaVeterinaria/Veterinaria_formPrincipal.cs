@@ -1,6 +1,7 @@
 using Archivos;
 using Excepciones;
 using proyecto_veterinaria;
+using System.Data.SqlClient;
 
 namespace GuardiaVeterinaria
 {
@@ -19,17 +20,26 @@ namespace GuardiaVeterinaria
 
         public GuardiaVeterinaria()
         {
-            InitializeComponent();
-            cancellationTokenSource = new CancellationTokenSource();
-            cancellationToken = cancellationTokenSource.Token;
-            veterinaria = new Veterinaria();
-            todasLasMascotas = new List<Mascota>();
-            todasLasMascotas = GestorSql.GetMascotas();
-            todosLosMedicos = new List<Medico>();
-            todosLosMedicos = GestorSql.GetMedicos();
-            veterinaria.InformarModificacion += RefrescarForm;
-            veterinaria.Atender += veterinaria.PacienteAtendido;
-            xmlYaIngresado = false;
+            try
+            {
+                InitializeComponent();
+                cancellationTokenSource = new CancellationTokenSource();
+                cancellationToken = cancellationTokenSource.Token;
+                veterinaria = new Veterinaria();
+                todasLasMascotas = new List<Mascota>();
+                todasLasMascotas = GestorSql.GetMascotas();
+                todosLosMedicos = new List<Medico>();
+                todosLosMedicos = GestorSql.GetMedicos();
+                veterinaria.InformarModificacion += RefrescarForm;
+                veterinaria.Atender += veterinaria.PacienteAtendido;
+                xmlYaIngresado = false;
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Environment.Exit(0);
+            }
         }
 
         private void btnNuevaMascota_Click(object sender, EventArgs e)

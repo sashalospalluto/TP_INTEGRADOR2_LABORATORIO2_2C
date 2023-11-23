@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
+using Excepciones;
 
 namespace proyecto_veterinaria
 {
@@ -46,10 +47,9 @@ namespace proyecto_veterinaria
                     mascota.Add(m);
                 }
             }
-            catch (Exception ex)
+            catch (SqlException ex)
             {
-
-                throw;
+                throw new Exception("Error al conectarse a la BD, vetifique el stringConnection", ex);
             }
             finally
             {
