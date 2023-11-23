@@ -177,10 +177,14 @@ namespace GuardiaVeterinaria
                         xml.Leer("Mascota", out List<Mascota> cargaMascotas);
                         foreach (Mascota item in cargaMascotas)
                         {
-                            veterinaria += item;
-                            xmlYaIngresado = true;
-                            //this.Refrescar();
-                            //ComenzarAtencion(item);
+                            if (GestorSql.GuardarMascota(item))
+                            {
+                                veterinaria += item;
+                                xmlYaIngresado = true;
+                                //this.Refrescar();
+                                //ComenzarAtencion(item);
+
+                            }                            
                         }
                     }
                     else
